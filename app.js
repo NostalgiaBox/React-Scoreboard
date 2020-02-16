@@ -55,7 +55,7 @@ const App = (props) => {
         <div className="scoreboard">
             <Header 
                 title="Scoreboard" 
-                totalPlayers={1}
+                totalPlayers={props.initialPlayers.length}
             />
 
             {/* Player List */}
