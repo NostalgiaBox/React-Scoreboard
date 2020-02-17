@@ -12,22 +12,26 @@ class App extends React.Component {
       {
         name: "Guil",
         score: 0,
-        id: 1
+        id: 1,
+        isHighScore: false 
       },
       {
         name: "Treasure",
         score: 0,
-        id: 2
+        id: 2,
+        isHighScore: false 
       },
       {
         name: "Ashley",
         score: 0,
-        id: 3
+        id: 3,
+        isHighScore: false 
       },
       {
         name: "James",
         score: 0,
-        id: 4
+        id: 4,
+        isHighScore: false 
       }
     ]
   };
@@ -43,6 +47,15 @@ class App extends React.Component {
     console.log(index);
   }
   
+  getHighScore = () => {
+    const scores = this.state.players.map( p => p.score);
+    const highScore = Math.max(...scores);
+    if (highScore) {
+      return highScore;
+    }
+    return null;
+  }
+
   handleAddPlayer = (name) => {
     this.setState( prevState => {
       return{
@@ -59,19 +72,22 @@ class App extends React.Component {
 
   }
 
+
   handleRemovePlayer = (id) => {
     this.setState( prevState => {
       return {
         players: prevState.players.filter(p => p.id !== id)
       };
     });
+    
   }
 
   render() {
+    const highScore = this.getHighScore();
     return (
       <div className="scoreboard">
         <Header 
-          title="Scoreboard" 
+          
           players={this.state.players} 
         />
   
@@ -84,7 +100,8 @@ class App extends React.Component {
             key={player.id.toString()}
             index={index}
             changeScore={this.handleScoreChange} 
-            removePlayer={this.handleRemovePlayer}           
+            removePlayer={this.handleRemovePlayer} 
+            isHighScore={highScore === player.score}
           />
         )}
 
